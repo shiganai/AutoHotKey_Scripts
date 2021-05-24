@@ -1,0 +1,31 @@
+(Lc^2*M*(dtheta_After - dtheta_Before))/3 == I_F_X*Lc*sin(theta) - I_F_Y*Lc*cos(theta)
+
+
+dtheta_After - dtheta_Before == -(3*(I_F_Y*cos(theta) - I_F_X*sin(theta)))/(Lc*M)
+
+-M*(dx_Before + Lc*dtheta_After*sin(theta)) == I_F_X
+
+-dx_Before == -(3*I_F_X*cos(2*theta) - 5*I_F_X + 3*I_F_Y*sin(2*theta))/(2*M)
+
+
+
+
+dtheta_After - dtheta_Before == -(3*(I_F_Y*cos(theta) - I_F_X*sin(theta)))/(Lc*M) %Automation
+
+(Lc^2*M*(dtheta_After - dtheta_Before))/3 == I_F_X*Lc*sin(theta) - I_F_Y*Lc*cos(theta)
+
+Newton_Eq_Collision_Automation
+dtheta_After_Eq = 
+(4*Lc*dtheta_Before + 3*dy_Before*cos(theta) - 3*dx_Before*sin(theta))/(4*Lc)
+
+Newton_Eq_Collision
+dtheta_After_Eq =
+(Lc*dtheta_Before + 3*dy_Before*cos(theta) - 3*dx_Before*sin(theta))/(4*Lc)
+
+Newton_Eq_Collision_Automation
+dtheta_After_Eq =
+(Lc*dtheta_Before + 3*dy_G_Before*cos(theta) - 3*dx_G_Before*sin(theta))/(4*Lc)
+
+_\__a_a_a\A\A\a\aa_a_a_as_a_a_a_A_A_A_A_A_A_A__Aa__A_A_B_B_B_c_N_Ncn_A_A_A_Aa_A_A_A_A_A_Aa__AaaaaaA
+||||||| __a_a_a___a_a_a_A_a_a_a_A_a_A_A__a_A_A_a_A_a_a_a_A_A_Aaaaa
+_a_a_a_a_a_a_a_a_a__a_a_a_a___a_a_A_A_a_a_A_A_A_A_b_B_B_B_B_a_a_B_A_a_a_a_A_A_A_A__A___AHHAE  ;++ +
