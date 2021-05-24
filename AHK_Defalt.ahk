@@ -1,6 +1,7 @@
 ﻿SetKeyDelay, 0
 Numpad_Trigger = on
 Underbar_Trigger = off
+Alphabets_Trigger = IME_GET()
 SetNumlockState, AlwaysOn
 
 B_PriorHotKey = *sc079 up
@@ -16,6 +17,7 @@ sc070::Return
 ;Spaceを押したとき
 
 $*Space::
+if (IME_GET() == 0){
 if (isSpaceRepeat == true)      ;キーリピートしているかどうか
 {
 if (A_PriorKey != "Space")      ;Space長押し中の他キー押し下げを検出
@@ -30,16 +32,22 @@ else Return
 Send {Blind}{ShiftDown}     ;Shiftを押し下げ
 isSpaceRepeat := true
 Return
+}
+else {
+Send {Blind}{Space}     ;Spaceを入力
+}
 
 ;Spaceを離したとき
 $*Space up::
+if (IME_GET() == 0){
 Send {Blind}{ShiftUp}       ;Shiftをリリース
 isSpaceRepeat := false
 if (A_PriorKey == "Space"){     ;Space単押しを検出
 Send {Blind}{Space}     ;Spaceを入力
 }
 Return 
-
+}
+else Return
 
 ;------------------------------------------------------------------
 
@@ -86,7 +94,9 @@ Return
 ;------------------------------------------------------------------
 
 ; Esc::
-; MsgBox %A_PriorHotKey%, %A_PriorKey%
+; If (IME_GET() == 1){
+;     MsgBox Jap
+; }
 ; Return
 
 
@@ -106,7 +116,7 @@ Return
 sc07B::Return,
 
 a::
-If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, A
 Return
@@ -119,7 +129,7 @@ Return
 Return
 
 b::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, B
 Return
@@ -132,7 +142,7 @@ Return
 Return
 
 c::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, C
 Return
@@ -145,7 +155,7 @@ Return
 Return
 
 d::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, D
 Return
@@ -158,7 +168,7 @@ Return
 Return
 
 e::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, E
 Return
@@ -171,7 +181,7 @@ Return
 Return
 
 f::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, F
 Return
@@ -184,7 +194,7 @@ Return
 Return
 
 g::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, G
 Return
@@ -197,7 +207,7 @@ Return
 Return
 
 h::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, H
 Return
@@ -210,7 +220,7 @@ Return
 Return
 
 i::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, I
 Return
@@ -223,7 +233,7 @@ Return
 Return
 
 j::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, J
 Return
@@ -236,7 +246,7 @@ Return
 Return
 
 k::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, K
 Return
@@ -249,7 +259,7 @@ Return
 Return
 
 l::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, L
 Return
@@ -262,7 +272,7 @@ Return
 Return
 
 m::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, M
 Return
@@ -275,7 +285,7 @@ Return
 Return
 
 n::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, N
 Return
@@ -288,7 +298,7 @@ Return
 Return
 
 o::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, O
 Return
@@ -301,7 +311,7 @@ Return
 Return
 
 p::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, P
 Return
@@ -314,7 +324,7 @@ Return
 Return
 
 q::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, Q
 Return
@@ -327,7 +337,7 @@ Return
 Return
 
 r::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, R
 Return
@@ -340,7 +350,7 @@ Return
 Return
 
 s::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, S
 Return
@@ -353,7 +363,7 @@ Return
 Return
 
 t::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, T
 Return
@@ -366,7 +376,7 @@ Return
 Return
 
 u::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, U
 Return
@@ -379,7 +389,7 @@ Return
 Return
 
 v::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, V
 Return
@@ -392,7 +402,7 @@ Return
 Return
 
 w::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, W
 Return
@@ -405,7 +415,7 @@ Return
 Return
 
 x::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, X
 Return
@@ -418,7 +428,7 @@ Return
 Return
 
 y::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, Y
 Return
@@ -431,7 +441,7 @@ Return
 Return
 
 z::
-If (A_PriorHotKey = B_PriorHotKey && A_PriorKey = B_PriorKey && Underbar_Trigger == "on")
+If (A_PriorHotKey = "*sc079 up" && A_PriorKey = B_PriorKey && Underbar_Trigger == "on" && IME_GET() == 0)
 {
 Send, Z
 Return
@@ -444,7 +454,7 @@ Return
 Return
 
 ~sc079 & a::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {A}
 }
@@ -455,7 +465,7 @@ Else
 Return
 
 ~sc079 & b::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {B}
 }
@@ -466,7 +476,7 @@ Else
 Return
 
 ~sc079 & c::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {C}
 }
@@ -477,7 +487,7 @@ Else
 Return
 
 ~sc079 & d::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {D}
 }
@@ -488,7 +498,7 @@ Else
 Return
 
 ~sc079 & e::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {E}
 }
@@ -499,7 +509,7 @@ Else
 Return
 
 ~sc079 & f::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {F}
 }
@@ -510,7 +520,7 @@ Else
 Return
 
 ~sc079 & g::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {G}
 }
@@ -521,7 +531,7 @@ Else
 Return
 
 ~sc079 & h::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {H}
 }
@@ -532,7 +542,7 @@ Else
 Return
 
 ~sc079 & i::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {I}
 }
@@ -543,7 +553,7 @@ Else
 Return
 
 ~sc079 & j::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {J}
 }
@@ -554,7 +564,7 @@ Else
 Return
 
 ~sc079 & k::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {K}
 }
@@ -565,7 +575,7 @@ Else
 Return
 
 ~sc079 & l::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {L}
 }
@@ -576,7 +586,7 @@ Else
 Return
 
 ~sc079 & m::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {M}
 }
@@ -587,7 +597,7 @@ Else
 Return
 
 ~sc079 & n::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {N}
 }
@@ -598,7 +608,7 @@ Else
 Return
 
 ~sc079 & o::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {O}
 }
@@ -609,7 +619,7 @@ Else
 Return
 
 ~sc079 & p::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {P}
 }
@@ -620,7 +630,7 @@ Else
 Return
 
 ~sc079 & q::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {Q}
 }
@@ -631,7 +641,7 @@ Else
 Return
 
 ~sc079 & r::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {R}
 }
@@ -642,7 +652,7 @@ Else
 Return
 
 ~sc079 & s::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {S}
 }
@@ -653,7 +663,7 @@ Else
 Return
 
 ~sc079 & t::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {T}
 }
@@ -664,7 +674,7 @@ Else
 Return
 
 ~sc079 & u::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {U}
 }
@@ -675,7 +685,7 @@ Else
 Return
 
 ~sc079 & v::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {V}
 }
@@ -686,7 +696,7 @@ Else
 Return
 
 ~sc079 & w::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {W}
 }
@@ -697,7 +707,7 @@ Else
 Return
 
 ~sc079 & x::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {X}
 }
@@ -708,7 +718,7 @@ Else
 Return
 
 ~sc079 & y::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {Y}
 }
@@ -719,7 +729,7 @@ Else
 Return
 
 ~sc079 & z::
-If (Underbar_Trigger == "on")
+If (Underbar_Trigger == "on" && IME_GET() == 0)
 {
     Send, {Z}
 }
