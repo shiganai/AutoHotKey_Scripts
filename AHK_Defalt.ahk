@@ -13,6 +13,13 @@ sc03A::\
 sc079::_
 sc070::Return
 
+
+; Esc::Send, %A_Space%{+}%A_Space%
+
+~Space & @::Send, %A_Space%{=}%A_Space%
+~Space & sc027::Send, %A_Space%{+}%A_Space%
+~Space & sc028::Send, %A_Space%{*}%A_Space%
+
 ;------------------------------------------------------------------
 ;Spaceを押したとき
 
@@ -92,12 +99,6 @@ else Return
 ; Return
 
 ;------------------------------------------------------------------
-
-; Esc::
-; If (IME_GET() == 1){
-;     MsgBox Jap
-; }
-; Return
 
 
 NumLock::
