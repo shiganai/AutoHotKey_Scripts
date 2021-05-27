@@ -14,7 +14,18 @@ sc079::_
 sc070::Return
 
 
-; Esc::Send, %A_Space%{+}%A_Space%
+; Esc::
+; IfWinActive ahk_exe devenv.exe
+; {
+;     MsgBox in visual stuido
+;     Return
+; }
+; else
+; {
+;     MsgBox out of visual stuido
+;     Return
+; }
+; Return
 
 ~Space & @::Send, %A_Space%{=}%A_Space%
 ~Space & sc027::Send, %A_Space%{+}%A_Space%
@@ -100,6 +111,37 @@ else Return
 
 ;------------------------------------------------------------------
 
+
+~Ctrl & /::
+IfWinActive ahk_exe devenv.exe
+{
+    Send, ^k
+    Send, ^c
+    Return
+}
+else
+{
+    Send, ^/
+    Return
+}
+Return
+
+~Alt & /::
+IfWinActive ahk_exe devenv.exe
+{
+    Send, ^k
+    Send, ^u
+    Return
+}
+else
+{
+    Send, !/
+    Return
+}
+Return
+
+
+;------------------------------------------------------------------
 
 NumLock::
 If (Underbar_Trigger == "on")
