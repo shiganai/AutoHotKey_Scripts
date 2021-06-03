@@ -808,26 +808,26 @@ Return
 ; }
 ; Return
 
-2::
-If (Numpad_Trigger == "off")
-{
-    Send, 2
-    Return
-}
-Else
-{
-    IfWinActive, ahk_exe devenv.exe
-    {
-    2::"
-    Return
-    }
-    Else
-    {
-    Send, 2
-    Return
-    }
-}
-Return
+; 2::
+; If (Numpad_Trigger == "off")
+; {
+;     Send, 2
+;     Return
+; }
+; Else
+; {
+;     IfWinActive, ahk_exe devenv.exe
+;     {
+;     2::"
+;     Return
+;     }
+;     Else
+;     {
+;     Send, 2
+;     Return
+;     }
+; }
+; Return
 
 ; 3::
 ; If (Numpad_Trigger == "off")
