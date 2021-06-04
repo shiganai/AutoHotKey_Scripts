@@ -22,6 +22,52 @@ ReplacePowered(Input)
     Return, Input
 }
 
+Delete_If(Input)
+{
+    pos = 1
+    Pattern = \bif\s.*
+    While (pos != 0)
+    {
+        tpos := RegExMatch(Input, Pattern, Match, pos)
+        ; MsgBox, %Match%
+        If (tpos != 0)
+        {
+            pos := (tpos + 1)
+            StringReplace, Input, Input, %Match% , , All
+            ; MsgBox, %Input%
+        }
+        Else
+        {
+            pos = 0
+        }
+    }
+    ; MsgBox, Delete_If fin
+    Return, Input
+}
+
+Delete_End(Input)
+{
+    pos = 1
+    Pattern = \bend
+    While (pos != 0)
+    {
+        tpos := RegExMatch(Input, Pattern, Match, pos)
+        ; MsgBox, %Match%
+        If (tpos != 0)
+        {
+            pos := (tpos + 1)
+            StringReplace, Input, Input, %Match% , , All
+            ; MsgBox, %Input%
+        }
+        Else
+        {
+            pos = 0
+        }
+    }
+    ; MsgBox, Delete_End fin
+    Return, Input
+}
+
 add_F_After_Number(Input)
 {
     Pattern = \b\d+\.?\d*e?\+?-?\d*
@@ -91,7 +137,10 @@ Esc::
     Input = %Clipboard%
     replaced_Input = %Input%
 
-    ; Pattern = \b\S*\.\^\s\d*
+    replaced_Input := Delete_If(replaced_Input)
+
+    replaced_Input := Delete_End(replaced_Input)
+
     replaced_Input := ReplacePowered(replaced_Input)
 
     replaced_Input := add_F_After_Number(replaced_Input)
