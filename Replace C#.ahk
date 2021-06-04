@@ -25,11 +25,13 @@ ReplacePowered(Input)
 Delete_If(Input)
 {
     pos = 1
-    Pattern = \bif\s.*
+    Pattern = \bif.*\r\n
+    ; Pattern = \bif\s.*
     While (pos != 0)
     {
         tpos := RegExMatch(Input, Pattern, Match, pos)
         ; MsgBox, %Match%
+        ; MsgBox, %tpos%
         If (tpos != 0)
         {
             pos := (tpos + 1)
@@ -48,7 +50,7 @@ Delete_If(Input)
 Delete_End(Input)
 {
     pos = 1
-    Pattern = \bend
+    Pattern = \bend(\r\n)*
     While (pos != 0)
     {
         tpos := RegExMatch(Input, Pattern, Match, pos)
@@ -128,7 +130,83 @@ add_Float(Input)
     Return, Input
 }
 
+add_Float_Varin(Input)
+{
+    Pattern = ,\s([^,]+)
+    pos = 1
+    While (pos != 0)
+    {
+        tpos := RegExMatch(Input, Pattern, Match, pos)
+        ; MsgBox, tpos = %tpos%
+        If (tpos != 0)
+        {
+            ; MsgBox, Match = %Match%
+            pos := (tpos + StrLen(", float "Match1))
+            floatpos := RegExMatch(Match1, "float")
+            ; MsgBox, Match1 = %Match1%
+            if (floatpos == 0)
+            {
+                StringReplace, Input, Input, `, %Match1%`, , `, float %Match1%`,
+                ; MsgBox, %Input%
+            } 
+        }
+        Else
+        {
+            pos = 0
+        }
+    }
+    Return, Input
+}
+
 Esc::
+    StringCaseSense, on
+    old_Clipboard := ClipboardAll
+    Clipboard = 
+    Send, ^c
+    ClipWait, 2
+    Input = %Clipboard%
+    replaced_Input = %Input%
+    Sleep, 10
+
+    replaced_Input := Delete_If(replaced_Input)
+    Sleep, 10
+
+    replaced_Input := Delete_End(replaced_Input)
+    Sleep, 10
+
+    replaced_Input := ReplacePowered(replaced_Input)
+    Sleep, 10
+
+    replaced_Input := add_F_After_Number(replaced_Input)
+    Sleep, 10
+
+    replaced_Input := add_Float(replaced_Input)
+    Sleep, 10
+
+    StringReplace, replaced_Input, replaced_Input, ./ , %A_Space%/, All
+    Sleep, 10
+
+    StringReplace, replaced_Input, replaced_Input, .* , %A_Space%*, All
+    Sleep, 10
+
+    StringReplace, replaced_Input, replaced_Input, cos , Mathf.Cos, All
+    Sleep, 10
+
+    StringReplace, replaced_Input, replaced_Input, sin , Mathf.Sin, All
+    Sleep, 10
+
+    ; MsgBox, %replaced_Input%
+    ; MsgBox, fin
+    StringCaseSense, off
+    
+    Clipboard := replaced_Input
+    Send, ^v
+    ClipWait, 2
+    Clipboard := old_Clipboard
+    ClipWait, 2
+Return
+
+~Shift & Esc::
     StringCaseSense, on
     old_Clipboard = %Clipboard%
     Clipboard = 
@@ -137,30 +215,19 @@ Esc::
     Input = %Clipboard%
     replaced_Input = %Input%
 
-    replaced_Input := Delete_If(replaced_Input)
+    replaced_Input := RegExReplace(replaced_Input, "\(", "(float ")
 
-    replaced_Input := Delete_End(replaced_Input)
+    tpos := RegExMatch(replaced_Input, "\b,\s([^,)]+)\)", Match, 1)
+    ; MsgBox, %Match1%
+    StringReplace, replaced_Input, replaced_Input, `, %Match1% , `, float %Match1%
 
-    replaced_Input := ReplacePowered(replaced_Input)
+    replaced_Input := add_Float_Varin(replaced_Input)
 
-    replaced_Input := add_F_After_Number(replaced_Input)
-
-    replaced_Input := add_Float(replaced_Input)
-
-    StringReplace, replaced_Input, replaced_Input, ./ , %A_Space%/, All
-
-    StringReplace, replaced_Input, replaced_Input, .* , %A_Space%*, All
-
-    StringReplace, replaced_Input, replaced_Input, cos , Mathf.Cos, All
-
-    StringReplace, replaced_Input, replaced_Input, sin , Mathf.Sin, All
-
-    ; MsgBox, %replaced_Input%
-    ; MsgBox, fin
     StringCaseSense, off
     
     Clipboard = %replaced_Input%
     Send, ^v
+    ClipWait
     Clipboard = %old_Clipboard%
+    ClipWait
 Return
-
