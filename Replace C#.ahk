@@ -2,7 +2,7 @@
 ReplacePowered(Input)
 {
     pos = 1
-    Pattern = \b\S*\.\^\s\d*f*
+    Pattern = \w*\.\^\s*\d+f* ; Pattern = \b\S*\.\^\s\d*f*
     While (pos != 0)
     {
         tpos := RegExMatch(Input, Pattern, Match, pos)
@@ -72,7 +72,7 @@ Delete_End(Input)
 
 add_F_After_Number(Input)
 {
-    Pattern = \b\d+\.?\d*e?\+?-?\d*
+    Pattern = \b\d+\.?\d*(e\+\d*)?(e\-\d*)?
     pos = 1
     While (pos != 0)
     {
@@ -132,7 +132,7 @@ add_Float(Input)
 
 add_Float_Varin(Input)
 {
-    Pattern = ,\s([^,]+)
+    Pattern = ,\s*([^,]+)
     pos = 1
     While (pos != 0)
     {
@@ -141,14 +141,9 @@ add_Float_Varin(Input)
         If (tpos != 0)
         {
             ; MsgBox, Match = %Match%
-            pos := (tpos + StrLen(", float "Match1))
-            floatpos := RegExMatch(Match1, "float")
-            ; MsgBox, Match1 = %Match1%
-            if (floatpos == 0)
-            {
-                StringReplace, Input, Input, `, %Match1%`, , `, float %Match1%`,
-                ; MsgBox, %Input%
-            } 
+            StringReplace, replaced_Match, Match, %Match1% , float %Match1%
+            StringReplace, Input, Input, %Match%, %replaced_Match%
+            pos := (tpos + StrLen(replaced_Match))
         }
         Else
         {
@@ -160,7 +155,7 @@ add_Float_Varin(Input)
 
 Esc::
     StringCaseSense, on
-    old_Clipboard := ClipboardAll
+    old_Clipboard := ""
     Clipboard = 
     Send, ^c
     ClipWait, 2
@@ -198,11 +193,11 @@ Esc::
     ; MsgBox, %replaced_Input%
     ; MsgBox, fin
     StringCaseSense, off
-    
+
     Clipboard := replaced_Input
     Send, ^v
     ClipWait, 2
-    Clipboard := old_Clipboard
+    Clipboard := ""
     ClipWait, 2
 Return
 
@@ -224,7 +219,7 @@ Return
     replaced_Input := add_Float_Varin(replaced_Input)
 
     StringCaseSense, off
-    
+
     Clipboard = %replaced_Input%
     Send, ^v
     ClipWait
